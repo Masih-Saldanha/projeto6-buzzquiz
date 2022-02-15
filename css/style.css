@@ -3,6 +3,10 @@ body * {
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
 }
+img {
+    width: 340px;
+    height: 181px;
+}
 
 /* TOPO FIXO */
 header {
@@ -49,7 +53,7 @@ h3 {
     padding-top: 120px;
     margin-left: 18px;
     /* border: 1px solid black; */
-    color: #FFFFFF;
+    /* color: #FFFFFF; */
 }
 article {
     /* width: calc(100vw - 34px); */
