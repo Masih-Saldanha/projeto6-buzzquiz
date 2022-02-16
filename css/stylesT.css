@@ -19,6 +19,7 @@ header {
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 2;
 }
 header h1 {
     font-weight: 700;
@@ -46,25 +47,35 @@ h2 {
     align-self: baseline;
     /* border: 1px solid black; */
 }
-article {
-    /* width: calc(100vw - 34px); */
+.quizz-on-screen {
     width: 340px;
     height: 181px;
     margin-bottom: 14px;
     border-radius: 5px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url();
     background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
 }
-article img {
+.quizz-on-screen img {
     width: 340px;
     height: 181px;
     position: absolute;
 }
-article h3 {
+.quizz-on-screen:before { /* PSEUDO ELEMENTO QUE ADICIONA DEGRADÊ */
+    content: '';
+    position:absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
+    z-index: 1;
+}
+.quizz-on-screen h3 {
     height: 54px;
     font-family: roboto;
+    z-index: 1;
 
     font-size: 19px;
     font-weight: 400;
@@ -80,6 +91,7 @@ article h3 {
 /* ARTICLE DE CRIAÇÃO DE QUIZZES */
 .no-quiz-created-yet {
     width: calc(100vw - 34px);
+    height: 181px;
     border-radius: 5px;
     border: 1px dashed #D5D5D5;
     margin-bottom: 35px;

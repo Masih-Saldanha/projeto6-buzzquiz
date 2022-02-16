@@ -10,62 +10,62 @@ function renderQuizzes(quizz) {
     quizzListHTML.innerHTML = "";
     for (i = 0; i < data.length; i++) {
         quizzListHTML.innerHTML += `
-        <article>
+        <article class="quizz-on-screen">
             <img class="fundo" src="${data[i].image}" alt="">
             <h3>${data[i].title}</h3>
         </article>
         `
     }
-    // console.log(data);
+    console.log(data);
 }
 
 
 
 // LISTA DE TELAS //
 
-let telaPrincipal = document.querySelector(".tela-principal")
-let tela8 = document.querySelector(".tela-8")
-let tela9 = document.querySelector(".tela-9")
+let telaPrincipal = document.querySelector(".tela-principal");
+let tela8 = document.querySelector(".tela-8");
+let tela9 = document.querySelector(".tela-9");
 
 // VARIAVEIS //
-let informacoesBasicas = document.querySelectorAll(".tela-8 .container input")
-let tituloQuizz
-let urlImagemQuizz
-let quantidadeDePerguntas
-let nivelQuizz
+let informacoesBasicas = document.querySelectorAll(".tela-8 .container input");
+let tituloQuizz;
+let urlImagemQuizz;
+let quantidadeDePerguntas;
+let nivelQuizz;
 
-let perguntasDoQuizz = document.querySelectorAll(".tela-9 .container")
-let textoDaPergunta
-let corDeFundo
-let respostaCorreta
-let urlImagemCorreta
-let respostaIncorreta
-let urlImagemIncorreta
+let perguntasDoQuizz = document.querySelectorAll(".tela-9 .container");
+let textoDaPergunta;
+let corDeFundo;
+let respostaCorreta;
+let urlImagemCorreta;
+let respostaIncorreta;
+let urlImagemIncorreta;
 
 // FUNÇÕES //
 function createQuiz() {
-    telaPrincipal.classList.add("hide")
-    tela8.classList.remove("hide")
+    telaPrincipal.classList.add("hide");
+    tela8.classList.remove("hide");
 }
 function validarInformacoes() {
-    tituloQuizz = informacoesBasicas[0].value
-    urlImagemQuizz = informacoesBasicas[1].value
-    quantidadeDePerguntas = informacoesBasicas[2].value
-    nivelQuizz = informacoesBasicas[3].value
-    let requisitosAtendidos = 0
-    let linkSeguro = ""
+    tituloQuizz = informacoesBasicas[0].value;
+    urlImagemQuizz = informacoesBasicas[1].value;
+    quantidadeDePerguntas = informacoesBasicas[2].value;
+    nivelQuizz = informacoesBasicas[3].value;
+    let requisitosAtendidos = 0;
+    let linkSeguro = "";
 
     if(tituloQuizz.length >= 20 && tituloQuizz.length < 65) {
-        requisitosAtendidos += 1
+        requisitosAtendidos += 1;
     } if (quantidadeDePerguntas >= 3) {
-        requisitosAtendidos+= 1
+        requisitosAtendidos += 1;
     } if (nivelQuizz >= 2) {
-        requisitosAtendidos += 1
+        requisitosAtendidos += 1;
     } if (urlImagemQuizz.length >= 5) {
         for (let i = 0; i < 5; i++) {
-            linkSeguro += urlImagemQuizz[i]
+            linkSeguro += urlImagemQuizz[i];
             if (linkSeguro == "https") {
-                requisitosAtendidos += 1
+                requisitosAtendidos += 1;
             }
         }
     }
