@@ -6,11 +6,12 @@ function renderQuizzes(quizz) {
     data = quizz.data;
     title = data.title;
     image = data.image;
+    id = data.id;
     const quizzListHTML = document.querySelector("section");
     quizzListHTML.innerHTML = "";
     for (i = 0; i < data.length; i++) {
         quizzListHTML.innerHTML += `
-        <article class="quizz-on-screen">
+        <article onclick = "intoQuizz(${data[i].id})" class="quizz-on-screen">
             <img class="fundo" src="${data[i].image}" alt="">
             <h3>${data[i].title}</h3>
         </article>
@@ -26,6 +27,7 @@ function renderQuizzes(quizz) {
 let telaPrincipal = document.querySelector(".tela-principal");
 let tela8 = document.querySelector(".tela-8");
 let tela9 = document.querySelector(".tela-9");
+let onQuizz = document.querySelector(".on-quizz");
 
 // VARIAVEIS //
 let informacoesBasicas = document.querySelectorAll(".tela-8 .container input");
@@ -55,7 +57,7 @@ function validarInformacoes() {
     let requisitosAtendidos = 0;
     let linkSeguro = "";
 
-    if(tituloQuizz.length >= 20 && tituloQuizz.length < 65) {
+    if (tituloQuizz.length >= 20 && tituloQuizz.length < 65) {
         requisitosAtendidos += 1;
     } if (quantidadeDePerguntas >= 3) {
         requisitosAtendidos += 1;
@@ -80,7 +82,7 @@ function validarInformacoes() {
 function criarPerguntas() {
     tela8.classList.add("hide")
     tela9.classList.remove("hide")
-    
+
     let tela_9 = document.querySelector(".tela-9")
     tela_9.innerHTML = `
         <h1>Crie suas perguntas</h1>
@@ -111,7 +113,7 @@ function criarPerguntas() {
                 </div>
             </div>
         </div>`
-        for (let i = 1; i < quantidadeDePerguntas; i++) {
+    for (let i = 1; i < quantidadeDePerguntas; i++) {
         tela_9.innerHTML += `
         <div class="container">
             <h2>Pergunta ${i + 1}</h2>
@@ -128,4 +130,57 @@ function validarPerguntas() {
     // urlImagemIncorreta = perguntasDoQuizz[5].value
 
     // console.log(textoDaPergunta)
+}
+
+// FUNÇÃO PARA RENDERIZAR QUIZZ CLICADO NA TELA
+function intoQuizz(id) {
+    telaPrincipal.classList.add("hide");
+    onQuizz.classList.remove("hide");
+    IDQUIZZ = id;
+    let promiseChoosenQuizz = axios.get(`${LINKGENERAL}/${IDQUIZZ}`);
+    promiseChoosenQuizz.then(renderChoosenQuiz);
+    // onQuizz.innerHTML += `
+
+    // `;
+}
+function renderChoosenQuiz(quizz) {
+    data = quizz.data;
+    id = quizz.id;
+    title = quizz.title;
+    image = quizz.image;
+    questions = quizz.questions;
+    levels = quizz.levels;
+    console.log(data);
+
+    onQuizz.innerHTML = "";
+    onQuizz.innerHTML += `
+        <article class="choosen-quizz-on-screen">
+            <img class="choosen-quizz-top-image" src="${data.image}" alt="">
+            <h3>${data.title}</h3>
+        </article>
+        `;
+
+    for (i = 0; i < data.questions.length; i++) {
+        onQuizz.innerHTML += `
+        <div class="question-container-${i}">
+        </div>
+        `;
+    }
+
+    for (i = 0; i < data.questions.length; i++) {
+        let questionContainer = document.querySelector(`.question-container-${i}`);
+        questionContainer.innerHTML += `
+            <div class="question">
+                <h4>${data.questions[i].title}</h4>
+            </div>
+        `;
+        for (j = 0; j < data.questions[i].answers.length; j++) {
+            questionContainer.innerHTML += `
+            <div class="answer">
+                <img class="choosen-quizz-answer-image" src="${data.questions[i].answers[j].image}" alt="">
+                <h4>${data.questions[i].answers[j].text}</h4>
+            </div>
+            `;
+        }
+    }
 }

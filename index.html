@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="css/reset.css">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
     <link rel="stylesheet" href="css/stylesT.css">
-    
+
     <link rel="shortcut icon" href="assets/ICONE.ico" type="image/x-icon">
 
     <title>Buzz Quiz Driven</title>
@@ -23,7 +23,7 @@
     <!-- TOPO FIXO DA PAGINA -->
     <header>
         <!-- <div> -->
-            <h1>BuzzQuizz</h1>
+        <h1>BuzzQuizz</h1>
         <!-- </div> -->
     </header>
 
@@ -31,8 +31,12 @@
     <main class="tela-principal">
         <div class="container">
             <article class="no-quiz-created-yet">
-                <div class="sample-text"><p><small>Você não criou nenhum quizz ainda :(</small></p></div>
-                <div class="create-quiz" onclick="createQuiz()"><p><strong>Criar Quizz</strong></p></div>
+                <div class="sample-text">
+                    <p><small>Você não criou nenhum quizz ainda :(</small></p>
+                </div>
+                <div class="create-quiz" onclick="createQuiz()">
+                    <p><strong>Criar Quizz</strong></p>
+                </div>
             </article>
 
             <h2>Todos os quizzes</h2>
@@ -42,16 +46,22 @@
         </div>
     </main>
 
+    <!-- TELA DE EXIBIÇÃO AO ENTRAR EM UM QUIZZ -->
+
+    <main class="on-quizz hide">
+
+    </main>
+
     <!-- TELA 8 -- INFORMAÇÕES SOBRE O QUIZZ -->
     <main class="tela-8 create-quiz hide">
-            <h1>Comece pelo começo</h1>
-            <div class="container">
-                <input type="text" placeholder="Título do seu quizz">
-                <input type="text" placeholder="URL da imagem do seu quizz">
-                <input type="text" placeholder="Quantidade de perguntas do quizz">
-                <input type="text" placeholder="Quantidade de níveis do quizz">
-            </div>
-            <button onclick="validarInformacoes()">Prosseguir pra criar perguntas</button>
+        <h1>Comece pelo começo</h1>
+        <div class="container">
+            <input type="text" placeholder="Título do seu quizz">
+            <input type="text" placeholder="URL da imagem do seu quizz">
+            <input type="text" placeholder="Quantidade de perguntas do quizz">
+            <input type="text" placeholder="Quantidade de níveis do quizz">
+        </div>
+        <button onclick="validarInformacoes()">Prosseguir pra criar perguntas</button>
         </div>
     </main>
 
