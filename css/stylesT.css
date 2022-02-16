@@ -6,10 +6,6 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #FAFAFA;
 }
-img {
-    width: 340px;
-    height: 181px;
-}
 
 /* TOPO FIXO */
 header {
@@ -32,7 +28,7 @@ header h1 {
 
 /* TELA PRINCIPAL */
 main {
-    margin-top: 140px;
+    margin: 140px 0;
     background-color: #FAFAFA;
     display: flex;
     flex-direction: column;
@@ -56,13 +52,14 @@ article {
     height: 181px;
     margin-bottom: 14px;
     border-radius: 5px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url("/assets/ICONE.ico");
-    /* background-size: calc(100vw - 34px) 182px; */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url();
     background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
 }
 article img {
+    width: 340px;
+    height: 181px;
     position: absolute;
 }
 article h3 {
@@ -141,4 +138,79 @@ article h3 {
     article {
         margin: 7px;
     }
+}
+
+
+
+
+
+
+.hide {
+    display: none;
+}
+
+/* TELAS DE CRIAÇÃO DE QUIZZ */
+.create-quiz {
+    font-family: roboto;
+    font-size: 23px;
+    font-weight: 700;
+    color: #000000;
+}
+.create-quiz .container {
+    width: 600px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px 0px #0000000D;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 9px;
+    padding: 27px 0;
+    margin-top: 27px;
+}
+
+.create-quiz .container .resposta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 9px;
+}
+.create-quiz .container .respostasIncorretas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+}
+
+.create-quiz .container input{
+    width: 564px;
+    height: 46px;
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+
+    font-family: roboto;
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 400;
+    color: #BABABA;
+
+    padding-left: 24px;
+}
+.create-quiz .container input::placeholder {
+    color: #D1D1D1;
+}
+.create-quiz button {
+    width: 370px;
+    height: 54px;
+    background-color: #EC362D;
+    border: none;
+    border-radius: 15px;
+    
+    margin-top: 85px;
+
+    font-family: roboto;
+    font-size: 21px;
+    font-weight: 400;
+    text-align: center;
+    color: #FFF5F4;
 }

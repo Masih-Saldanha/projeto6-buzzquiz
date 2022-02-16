@@ -5,12 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/stylesT.css">
+    
     <link rel="shortcut icon" href="assets/ICONE.ico" type="image/x-icon">
+
     <title>Buzz Quiz Driven</title>
 </head>
 
@@ -23,7 +28,7 @@
     </header>
 
     <!-- TELA PRINCIPAL -->
-    <main>
+    <main class="tela-principal">
         <div class="container">
             <article class="no-quiz-created-yet">
                 <div class="sample-text"><p><small>Você não criou nenhum quizz ainda :(</small></p></div>
@@ -37,11 +42,28 @@
         </div>
     </main>
 
+    <!-- TELA 8 -- INFORMAÇÕES SOBRE O QUIZZ -->
+    <main class="tela-8 create-quiz hide">
+            <h1>Comece pelo começo</h1>
+            <div class="container">
+                <input type="text" placeholder="Título do seu quizz">
+                <input type="text" placeholder="URL da imagem do seu quizz">
+                <input type="text" placeholder="Quantidade de perguntas do quizz">
+                <input type="text" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <button onclick="validarInformacoes()">Prosseguir pra criar perguntas</button>
+        </div>
+    </main>
+
+    <!-- TELA 9 -- NÍVEIS DO QUIZZ -->
+    <main class="tela-9 create-quiz hide"></main>
+
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- JAVASCRIPT -->
-    <script src="script/script.js"></script>
+    <!-- <script src="script/script.js"></script> -->
+    <script src="script/scriptT.js"></script>
 </body>
 
 </html>

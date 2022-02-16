@@ -1,9 +1,7 @@
 const LINKGENERAL = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let IDQUIZZ = "";
-
 let promise = axios.get(LINKGENERAL);
 promise.then(renderQuizzes);
-
 function renderQuizzes(quizz) {
     data = quizz.data;
     title = data.title;
