@@ -225,6 +225,46 @@ h2 {
     text-align: center;
     color: #FFF5F4;
 }
+.create-quiz .semBorda {
+    width: 370px;
+    height: 54px;
+    background-color: #FAFAFA;
+    border: none;
+    margin-top: 9px;
+
+    font-family: roboto;
+    font-size: 21px;
+    font-weight: 400;
+    text-align: center;
+    color: #818181;
+}
+.tela-11 img {
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+
+    margin-bottom: -30px;
+    margin-top: 70px;
+    position: absolute;
+}
+.tela-11 h3 {
+    width: 500px;
+    height: 54px;
+
+    font-family: roboto;
+    font-size: 23px;
+    font-weight: 400;
+    color: #FFFFFF;
+
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 249px;
+    padding-left: 23px;
+}
+.tela-11 button {
+    margin-top: 316px;
+}
 
 /* TELA DE EXIBIÇÃO DE QUIZZ CLICADO */
 
