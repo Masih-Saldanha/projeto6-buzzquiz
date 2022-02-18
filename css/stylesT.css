@@ -301,9 +301,10 @@ h2 {
     align-items: center;
     justify-content: center;
     position: relative;
+    text-align: center;
 }
 .question-container {
-    margin-top: 28px;
+    margin-top: 38px;
 }
 h4 {
     font-weight: 700;
@@ -311,29 +312,27 @@ h4 {
 }
 .question {
     width: 90vw;
-    height: 89px;
     text-align: center;
-    padding-top: 1px;
 }
 .question h4 {
     color: #FFFFFF;
-    margin-top: 35px;
+    padding: 35px;
 }
 .answer {
-    /* background-color: blue; */
     margin-top: 12px;
     margin-bottom: 12px;
 }
 .choosen-quizz-answer-image {
     width: 44vw;
-    /* width: 163px; */
-    /* height: 113px; */
+    height: 100%;
+    padding-top: 2vh;
 }
 .answer h4 {
     font-size: 13px;
+    width: 44vw;
+    /* padding-bottom: 10px; */
 }
 .answers-container {
-    /* width: 100%; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

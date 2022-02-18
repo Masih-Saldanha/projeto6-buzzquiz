@@ -280,22 +280,27 @@ function renderChoosenQuiz(quizz) {
         `;
         const questionBackgroundColor = data.questions[i].color; // api
         const questionBackground = document.querySelector(`.question-${i}`);
-    
         questionBackground.style.backgroundColor = questionBackgroundColor;
+
+        let shuffledAnswers = data.questions[i].answers;
+        shuffledAnswers.sort(comparator);
+        // console.log(shuffledAnswers);
+
         for (j = 0; j < data.questions[i].answers.length; j++) {
             let answersContainer = document.querySelector(`.answers-container-${i}`);
-            // questionContainer.innerHTML += `
             answersContainer.innerHTML += `
             <div class="answer">
-                <img class="choosen-quizz-answer-image" src="${data.questions[i].answers[j].image}" alt="">
-                <h4>${data.questions[i].answers[j].text}</h4>
-            </div>
-            `;
+                <img class="choosen-quizz-answer-image" src="${shuffledAnswers[j].image}" alt="">
+                <h4>${shuffledAnswers[j].text}</h4>
+            </div>`;
         }
     }
-    // const questionBackgroundColor = data.questions[i].color; // api
-    // const questionBackground = document.querySelector(`.question-${i}`);
+    onQuizz.innerHTML += `
+    <h4>TESTE PÓS FIM DO QUIZZ</h4>
+    `;
+}
 
-    // questionBackground.style.backgroundcolor = questionBackgroundColor;
-    console.log(data.questions[0]);
+// FUNÇÃO DE EMBARALHAR
+function comparator() {
+    return Math.random() - 0.5;
 }
