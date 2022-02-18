@@ -263,7 +263,7 @@ function renderChoosenQuiz(quizz) {
 
     for (i = 0; i < data.questions.length; i++) {
         onQuizz.innerHTML += `
-        <div class="question-container-${i}">
+        <div class="question-container question-container-${i}">
         </div>
         `;
     }
@@ -271,12 +271,21 @@ function renderChoosenQuiz(quizz) {
     for (i = 0; i < data.questions.length; i++) {
         let questionContainer = document.querySelector(`.question-container-${i}`);
         questionContainer.innerHTML += `
-            <div class="question">
+            <div class="question question-${i}">
                 <h4>${data.questions[i].title}</h4>
             </div>
+            <div class="answers-container answers-container-${i}">
+
+            </div>
         `;
+        const questionBackgroundColor = data.questions[i].color; // api
+        const questionBackground = document.querySelector(`.question-${i}`);
+    
+        questionBackground.style.backgroundColor = questionBackgroundColor;
         for (j = 0; j < data.questions[i].answers.length; j++) {
-            questionContainer.innerHTML += `
+            let answersContainer = document.querySelector(`.answers-container-${i}`);
+            // questionContainer.innerHTML += `
+            answersContainer.innerHTML += `
             <div class="answer">
                 <img class="choosen-quizz-answer-image" src="${data.questions[i].answers[j].image}" alt="">
                 <h4>${data.questions[i].answers[j].text}</h4>
@@ -284,4 +293,9 @@ function renderChoosenQuiz(quizz) {
             `;
         }
     }
+    // const questionBackgroundColor = data.questions[i].color; // api
+    // const questionBackground = document.querySelector(`.question-${i}`);
+
+    // questionBackground.style.backgroundcolor = questionBackgroundColor;
+    console.log(data.questions[0]);
 }

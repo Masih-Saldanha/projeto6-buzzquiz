@@ -302,6 +302,9 @@ h2 {
     justify-content: center;
     position: relative;
 }
+.question-container {
+    margin-top: 28px;
+}
 h4 {
     font-weight: 700;
     font-size: 19px;
@@ -309,23 +312,29 @@ h4 {
 .question {
     width: 90vw;
     height: 89px;
-    background-color: red;
     text-align: center;
+    padding-top: 1px;
 }
 .question h4 {
     color: #FFFFFF;
     margin-top: 35px;
 }
 .answer {
-    background-color: blue;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* flex-wrap: wrap; */
+    /* background-color: blue; */
+    margin-top: 12px;
+    margin-bottom: 12px;
 }
 .choosen-quizz-answer-image {
-    width: 163px;
-    height: 113px;
+    width: 44vw;
+    /* width: 163px; */
+    /* height: 113px; */
 }
 .answer h4 {
     font-size: 13px;
+}
+.answers-container {
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
