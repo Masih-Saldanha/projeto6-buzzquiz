@@ -337,3 +337,49 @@ h4 {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+.quizz-end {
+    margin-top: 20px;
+    width: 90vw;
+    text-align: center;
+    background-color: #EC362D;
+}
+.quizz-end h4 {
+    color: #FFFFFF;
+    padding: 35px;
+}
+.end-img {
+    width: 90vw;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+.end-text {
+    width: 90vw;
+    font-size: 17px;
+    color:#484848;
+}
+.choosen-answer {
+    opacity: 0.3;
+}
+button {
+    width: 60vw;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 15px;
+    background-color: #EC362D;
+
+    font-weight: 400;
+    font-size: 18px;
+    color:#FFF5F4;
+    border: none;
+}
+.return-home {
+    background-color: #E5E5E5;
+    color:#818181;
+}
+.loading {
+    position: fixed;
+    width: 50vw;
+    z-index: 2;
+    top: 50vh;
+    left: 50vw;
+}

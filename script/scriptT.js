@@ -1,23 +1,33 @@
 const LINKGENERAL = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let IDQUIZZ = "";
 let promise = axios.get(LINKGENERAL);
+let loading = document.querySelector(".loading");
 promise.then(renderQuizzes);
 function renderQuizzes(quizz) {
     data = quizz.data;
     title = data.title;
     image = data.image;
     id = data.id;
+
+    loading.classList.remove("hide");
+    telaPrincipal.classList.remove("hide");
+    onQuizz.classList.add("hide");
+
     const quizzListHTML = document.querySelector("section");
-    quizzListHTML.innerHTML = "";
+    quizzListHTML.innerHTML = ``;
     for (i = 0; i < data.length; i++) {
         quizzListHTML.innerHTML += `
         <article onclick = "intoQuizz(${data[i].id})" class="quizz-on-screen">
             <img class="fundo" src="${data[i].image}" alt="">
             <h3>${data[i].title}</h3>
         </article>
-        `
+        `;
+        if (i === (data.length - 1)) {
+            loading.classList.add("hide");
+        }
     }
-    console.log(data);
+    telaPrincipal.scrollIntoView(true);
+    // console.log(data);
 }
 
 
@@ -52,7 +62,7 @@ function validarInformacoes() {
 
     let requisitosAtendidos = 0;
     let linkSeguro = "";
-    
+
     if (tituloQuizz.length >= 20 && tituloQuizz.length < 65) {
         requisitosAtendidos += 1;
     } if (quantidadeDePerguntas >= 3) {
@@ -67,11 +77,11 @@ function validarInformacoes() {
             }
         }
     }
-    
+
     // if (requisitosAtendidos == 4) {
-        //     proximaTela()
-        // } else {
-        //    requisitosNaoAtendidos()
+    //     proximaTela()
+    // } else {
+    //    requisitosNaoAtendidos()
     // } 
     criarPerguntas()
 }
@@ -133,7 +143,7 @@ function validarPerguntas() {
     let requisitosAtendidos = 0;
     let linkSeguro = "";
     let linkSeguro2 = ""
-    
+
     if (textoDaPergunta.length >= 20) {
         requisitosAtendidos += 1
     } if (corDeFundo.length == 7 && corDeFundo[0] == "#") {
@@ -149,7 +159,7 @@ function validarPerguntas() {
             }
         }
     }
-    
+
     // if (requisitosAtendidos == 4) {
     //     decidirNiveisDoQuizz()
     // } else {
@@ -157,7 +167,7 @@ function validarPerguntas() {
     // }
     decidirNiveisDoQuizz()
 }
-function decidirNiveisDoQuizz (){
+function decidirNiveisDoQuizz() {
     tela9.classList.add("hide")
     tela10.classList.remove("hide")
 
@@ -176,7 +186,7 @@ function decidirNiveisDoQuizz (){
         <h2>Nível ${i + 1}</h2>
         </div>`
     }
-    tela10.innerHTML += `<button onclick= "validarNiveis()">Finalizar Quizz</button>`    
+    tela10.innerHTML += `<button onclick= "validarNiveis()">Finalizar Quizz</button>`
 }
 
 function validarNiveis() {
@@ -235,14 +245,12 @@ function voltarHome() {
 
 // FUNÇÃO PARA RENDERIZAR QUIZZ CLICADO NA TELA
 function intoQuizz(id) {
+    loading.classList.remove("hide");
     telaPrincipal.classList.add("hide");
     onQuizz.classList.remove("hide");
     IDQUIZZ = id;
     let promiseChoosenQuizz = axios.get(`${LINKGENERAL}/${IDQUIZZ}`);
     promiseChoosenQuizz.then(renderChoosenQuiz);
-    // onQuizz.innerHTML += `
-
-    // `;
 }
 function renderChoosenQuiz(quizz) {
     data = quizz.data;
@@ -284,20 +292,102 @@ function renderChoosenQuiz(quizz) {
 
         let shuffledAnswers = data.questions[i].answers;
         shuffledAnswers.sort(comparator);
-        // console.log(shuffledAnswers);
 
         for (j = 0; j < data.questions[i].answers.length; j++) {
             let answersContainer = document.querySelector(`.answers-container-${i}`);
             answersContainer.innerHTML += `
-            <div class="answer">
+            <div class="answer answer-${shuffledAnswers[j].isCorrectAnswer}" onclick="chooseAnswer(${shuffledAnswers[j].isCorrectAnswer}, ${i})">
                 <img class="choosen-quizz-answer-image" src="${shuffledAnswers[j].image}" alt="">
                 <h4>${shuffledAnswers[j].text}</h4>
             </div>`;
         }
     }
-    onQuizz.innerHTML += `
-    <h4>TESTE PÓS FIM DO QUIZZ</h4>
-    `;
+    loading.classList.add("hide");
+}
+
+// FUNÇÃO DE ESCOLHER RESPOSTA
+let score = 0;
+let answeredQuestions = 0;
+let finalScore = 0;
+function chooseAnswer(answer, answerBoxID) {
+    let answerBox = document.querySelector(`.answers-container-${answerBoxID}`)
+    let totalPoints = document.querySelectorAll(".question-container").length;
+    // answerBox.style.backgroundColor = ("#333333");
+    answerBox.classList.add("choosen-answer");
+    for (i = 0; i < answerBox.childElementCount; i++) {
+        if (answerBox.children[i].classList.value === 'answer answer-true') {
+            answerBox.children[i].children[1].style.color = ("#009C22");
+            answerBox.children[i].setAttribute("onclick", "");
+        } else {
+            answerBox.children[i].children[1].style.color = ("#FF0B0B");
+            answerBox.children[i].setAttribute("onclick", "");
+        }
+    }
+    if (answer === true) {
+        score += 1;
+        answeredQuestions += 1;
+        // console.log("certo");
+        // console.log(score);
+        // console.log(answeredQuestions);
+    } else {
+        answeredQuestions += 1;
+        // console.log("errado");
+        // console.log(score);
+        // console.log(answeredQuestions);
+    }
+    if (answerBoxID < (totalPoints - 1)) {
+        let nextQuestion = document.querySelector(`.question-container-${answerBoxID + 1}`);
+        setTimeout(() => {
+            nextQuestion.scrollIntoView(false);
+        }, 2000);
+    }
+    if (answeredQuestions === totalPoints) {
+        finalScore = (score / totalPoints) * 100;
+        finalScore = Math.round(finalScore);
+        console.log(finalScore);
+        for (i = 1; i < data.levels.length; i++) {
+            if (finalScore >= data.levels[i - 1].minValue && finalScore <= data.levels[i].minValue) {
+                onQuizz.innerHTML += `
+                    <div class="quizz-end">
+                    <h4>${finalScore}% de acerto: ${data.levels[i].title}</h4>
+                    </div>
+                    <img class="end-img" src="${data.levels[i].image}" alt="">
+                    <h4 class="end-text">${data.levels[i].text}</h4>
+                    <button onclick="restartQuizz()">Reiniciar Quizz</button>
+                    <button class="return-home" onclick="returnHome()">Voltar pra home</button>
+                    `;
+            } else {
+                onQuizz.innerHTML += `
+                    <div class="quizz-end">
+                    <h4>${finalScore}% de acerto: ${data.levels[i].title}</h4>
+                    </div>
+                    <img class="end-img" src="${data.levels[i].image}" alt="">
+                    <h4 class="end-text">${data.levels[i].text}</h4>
+                    <button onclick="restartQuizz()">Reiniciar Quizz</button>
+                    <button class="return-home" onclick="returnHome()">Voltar pra home</button>
+                    `;
+            }
+            setTimeout(() => {
+                onQuizz.scrollIntoView(false);
+            }, 2000);
+        }
+        score = 0;
+        answeredQuestions = 0;
+        finalScore = 0;
+    }
+}
+
+// FUNÇÃO PARA VOLTAR PARA HOME
+function returnHome() {
+    telaPrincipal.scrollIntoView(true);
+    promise = axios.get(LINKGENERAL);
+    promise.then(renderQuizzes);
+}
+
+// FUNÇÃO PARA REINICIAR O QUIZZ
+function restartQuizz() {
+    onQuizz.scrollIntoView(true);
+    intoQuizz(IDQUIZZ);
 }
 
 // FUNÇÃO DE EMBARALHAR
