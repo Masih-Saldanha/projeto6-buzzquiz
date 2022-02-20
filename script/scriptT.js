@@ -27,7 +27,7 @@ function renderQuizzes(quizz) {
         }
     }
     telaPrincipal.scrollIntoView(true);
-    // console.log(data);
+    console.log(data);
 }
 
 
@@ -48,16 +48,122 @@ let urlImagemQuizz
 let quantidadeDePerguntas
 let quantidadeNiveis
 
-let objetoTextoDaPergunta = {}
-let objetoCor = {}
-let objetoRespostaVerdadeira = {}
-let objetoUrlCorreta = {}
-let objetoRespostaIncorreta = {}
-let objetoUrlImagemIncorreta = {}
-let objetotituloNivel = {}
-let objetoPorcentagemNivel = {}
-let objetoUrlNivel = {}
-let objetoDescricaoNivel = {}
+let objetoTextoDaPergunta = []
+let objetoCor = []
+let objetoRespostaVerdadeira = []
+let objetoUrlCorreta = []
+let objetoRespostaIncorreta = []
+let objetoUrlImagemIncorreta = []
+let objetotituloNivel = []
+let objetoPorcentagemNivel = []
+let objetoUrlNivel = []
+let objetoDescricaoNivel = []
+
+let conteudoQuizzCriado = {
+	title: "Título do quizz",
+	image: "https://http.cat/411.jpg",
+	questions: [
+		{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+                {
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				},
+                {
+					text: "Texto da resposta 3",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				},
+				{
+					text: "Texto da resposta 4",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+                {
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				},
+                {
+					text: "Texto da resposta 3",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				},
+				{
+					text: "Texto da resposta 4",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+                {
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				},
+                {
+					text: "Texto da resposta 3",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				},
+				{
+					text: "Texto da resposta 4",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}
+	],
+	levels: [
+		{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}
+	]
+}
+
+// let conteudoQuizzCriado = {
+// 	title: tituloQuizz,
+// 	image: urlImagemQuizz,
+// 	questions: [{answers: [{text: ""}]}],
+// 	levels: []
+// }
 
 // FUNÇÕES //
 function createQuiz() {
@@ -75,15 +181,31 @@ function validarInformacoes() {
     
     if (tituloQuizz.length >= 20 && tituloQuizz.length < 65) {
         requisitosAtendidos += 1;
+        conteudoQuizzCriado.title = tituloQuizz
     } if (quantidadeDePerguntas >= 3) {
         requisitosAtendidos += 1;
+        conteudoQuizzCriado.questions.length = quantidadeDePerguntas
+
+        for (i = 0; i < quantidadeDePerguntas; i++) {
+            conteudoQuizzCriado.questions[i] = {title: "", color: "", answers: []}
+        }
+
     } if (quantidadeNiveis >= 2) {
         requisitosAtendidos += 1;
+        conteudoQuizzCriado.levels.length = quantidadeNiveis
+
+        for (i = 0; i < quantidadeNiveis; i++) {
+            conteudoQuizzCriado.levels[i] = {title: "", image: "", text: "", minValue: 0}
+            // quando eu to validando o title do elemento 0 do array levels >
+            // conteudoQuizzCriado.levels[0]. = ""
+        }
+
     } if (urlImagemQuizz.length >= 5) {
         for (let i = 0; i < 5; i++) {
             linkSeguro += urlImagemQuizz[i];
             if (linkSeguro == "https") {
                 requisitosAtendidos += 1;
+                conteudoQuizzCriado.image = urlImagemQuizz
             }
         }
     }
@@ -186,6 +308,20 @@ function validarPerguntas() {
     let somaUrlCorreta = 0
     let somarUrlncorreta = 0
 
+    // for (i = 0; i < conteudoQuizzCriado.questions.length; i++) {
+    //     for (j = 0; j < corDeFundo.length; j++) {
+    //         conteudoQuizzCriado.questions[i].answers[j].text = corDeFundo[j].value;
+    //     }
+    // }
+
+    // {
+    //     text: "Texto da resposta 1",
+    //     image: "https://http.cat/411.jpg",
+    //     isCorrectAnswer: true
+    // },
+
+    // conteudoQuizzCriado.questions[i] = {title: "", color: "", answers: []}
+
     for (let i = 0; i < textoDaPergunta.length; i++) {
         let valor = textoDaPergunta[i].value
         if (valor.length >= 20) {
@@ -193,21 +329,31 @@ function validarPerguntas() {
             objetoTextoDaPergunta.push(valor)
         } if (somaTexto/textoDaPergunta.length == 1) {
             requisitosAtendidos += 1
+            for (i = 0; i < textoDaPergunta.length; i++) {
+                conteudoQuizzCriado.questions[i].title = textoDaPergunta[i].value;
+            }
         }
     }
+
     for (let i = 0; i < corDeFundo.length; i++) {
         let valor = corDeFundo[i].value
-        if (valor.length == 7 && valor[0] == "#") {
+        if (valor.length === 7 && valor[0] == "#") {
             for (let j = 0; j < valor.length; j++) {
                 for (let k = 0; k < caracteresValidos.length; k++) {
-                    if (valor[j] == caracteresValidos[k]) {
+                    if (valor[j] === caracteresValidos[k]) {
                         somaCor += 1
-                        objetoCor.push(valor)
+                        if (somaCor % 6 === 0) {
+                            objetoCor.push(valor)
+                        }
                     }
                 }
             }
         } if (somaCor/(corDeFundo.length*6) == 1) {
             requisitosAtendidos += 1
+            for (i = 0; i < corDeFundo.length; i++) {
+                conteudoQuizzCriado.questions[i].title = corDeFundo[i].value;
+            }
+            // console.log(objetoCor)
         }
     }
     for (let i = 0; i < respostaVerdadeira.length; i++) {
@@ -217,6 +363,12 @@ function validarPerguntas() {
             objetoRespostaVerdadeira.push(valor)
         } if (somaCorreta/(respostaVerdadeira.length) == 1) {
             requisitosAtendidos += 1
+
+            for (i = 0; i < respostaVerdadeira.length; i++) {
+                conteudoQuizzCriado.questions[i].answers[0].text = respostaVerdadeira[i].value;
+                conteudoQuizzCriado.questions[i].answers[0].isCorrectAnswer = true;
+            }
+
         }
     }
     for (let i = 0; i < respostaIncorreta.length; i++) {
@@ -226,6 +378,14 @@ function validarPerguntas() {
             objetoRespostaIncorreta.push(valor)
         } if (somaIncorreta/respostaIncorreta.length == 1) {
             requisitosAtendidos += 1
+
+            for (i = 0; i < respostaIncorreta.length; i++) {
+                for (j = 1; j < corDeFundo.length; j++) {
+                    conteudoQuizzCriado.questions[i].answers[j].text = respostaIncorreta[i].value;
+                    conteudoQuizzCriado.questions[i].answers[j].isCorrectAnswer = false;
+                }
+            }
+
         }
     }
     for (let i = 0; i < urlImagemCorreta.length; i++) {
@@ -240,6 +400,11 @@ function validarPerguntas() {
             }
         } if (somaUrlCorreta/urlImagemCorreta.length == 1) {
             requisitosAtendidos += 1
+
+            for (i = 0; i < urlImagemCorreta.length; i++) {
+                conteudoQuizzCriado.questions[i].answers[0].text = urlImagemCorreta[i].value;
+            }
+
         }
     }
     for (let i = 0; i < urlImagemIncorreta.length; i++) {
@@ -254,6 +419,13 @@ function validarPerguntas() {
             }
         } if (somarUrlncorreta/urlImagemIncorreta.length == 1) {
             requisitosAtendidos += 1
+
+            for (i = 0; i < urlImagemIncorreta.length; i++) {
+                for (j = 1; j < corDeFundo.length; j++) {
+                    conteudoQuizzCriado.questions[i].answers[j].text = urlImagemIncorreta[i].value;
+                }
+            }
+
         }
     }
 
@@ -272,7 +444,7 @@ function decidirNiveisDoQuizz (){
     <div class="container">
         <h2>Nível 1</h2>
         <input type="text" placeholder="Título do nível" class="tituloNivel">
-        <input type="text" placeholder="% de acerto mínima" class="porcentagem">
+        <input type="text" placeholder="% de acerto mínima" class="porcentagemNivel">
         <input type="text" placeholder="URL da imagem do nível" class="urlImagem">
         <input type="text" placeholder="Descrição do nível" class="descricaoNivel">
     </div>`
@@ -301,6 +473,8 @@ function validarNiveis() {
     let urlImagem = document.querySelectorAll(".tela-10 .container .urlImagem")
     let descricao = document.querySelectorAll(".tela-10 .container .descricaoNivel")
 
+    // conteudoQuizzCriado.levels[i] = {title: "", image: "", text: "", minValue: 0}
+
     let requisitosAtendidos = 0;
     let somaDescricao = 0
     let somaTitulo = 0
@@ -316,26 +490,34 @@ function validarNiveis() {
             objetotituloNivel.push(valor)
         } if (somaTitulo/titulo.length == 1) {
             requisitosAtendidos += 1
+            for (i = 0; i < titulo.length; i++) {
+                conteudoQuizzCriado.levels[i].title = titulo[i].value;
+            }
         }
     }
     for (let i = 0; i < porcentagens.length; i++) {
         let soma1 = 0
         let soma2 = 0
-        if (porcentagens[i] >= 0 && porcentagens[i] <= 100 && porcentagens[i] !== "") {
+        let valor = porcentagens[i].value
+        if (valor >= 0 && valor <= 100 && valor !== "") {
             soma1 += 1
             objetoPorcentagemNivel.push(valor)
-        } if (porcentagens[i] == 0) {
+        } if (valor == 0) {
             soma2 += 1
+            objetoPorcentagemNivel.push(valor)
         } if (soma1/porcentagens.length == 1 && soma2 >= 1) {
             requisitosAtendidos += 1
+            for (i = 0; i < porcentagens.length; i++) {
+                conteudoQuizzCriado.levels[i].minValue = porcentagens[i].value;
+            }
         }
     }
     for (let i = 0; i < urlImagem.length; i++) {
         let soma = 0
-        let urlPura = urlImagem[i].value
-        if (urlPura.length >= 5) {
+        let valor = urlImagem[i].value
+        if (valor.length >= 5) {
             for (let j = 0; j < 5; j++) {
-                linkSeguro += urlPura[j]
+                linkSeguro += valor[j]
                 if(linkSeguro == https) {
                     soma += 1
                     objetoUrlNivel.push(valor)
@@ -343,6 +525,9 @@ function validarNiveis() {
             }
         } if (soma == 1) {
             requisitosAtendidos += 1
+            for (i = 0; i < urlImagem.length; i++) {
+                conteudoQuizzCriado.levels[i].image = urlImagem[i].value;
+            }
         } 
     }
     for (let i = 0; i < descricao.length; i++) {
@@ -352,6 +537,9 @@ function validarNiveis() {
             objetoDescricaoNivel.push(valor)
         } if (somaDescricao/descricao.length == 1) {
             requisitosAtendidos += 1
+            for (i = 0; i < descricao.length; i++) {
+                conteudoQuizzCriado.levels[i].text = descricao[i].value;
+            }
         } 
     }  
 
@@ -368,13 +556,27 @@ function finalizarQuizz() {
 
     tela11.innerHTML = `
     <h1>Seu quizz está pronto!</h1>
-    <img src="${urlImagemQuizz}">
+    <div class="image-container">
+        <img src="${urlImagemQuizz}">
+    </div
     <h3>${tituloQuizz}</h3>
     <button>Acessar Quizz</button>
-    <button class="semBorda" onclick="voltarHome()">Voltar pra home</button>`
+    <button class="semBorda" onclick="returnHome()">Voltar pra home</button>`
+    console.log(conteudoQuizzCriado)
 }
 
-
+function criarObjetoPost() {
+    console.log(objetoTextoDaPergunta)
+    console.log(objetoCor)
+    console.log(objetoRespostaVerdadeira)
+    console.log(objetoUrlCorreta)
+    console.log(objetoRespostaIncorreta)
+    console.log(objetoUrlImagemIncorreta)
+    console.log(objetotituloNivel)
+    console.log(objetoPorcentagemNivel)
+    console.log(objetoUrlNivel)
+    console.log(objetoDescricaoNivel)
+}
 
 
 
