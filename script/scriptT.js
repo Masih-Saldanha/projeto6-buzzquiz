@@ -1,8 +1,11 @@
 const LINKGENERAL = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let IDQUIZZ = "";
+let listaQuizzProprio = document.querySelector(".tela-principal .container .no-quiz-created-yet");
+let lista
 let promise = axios.get(LINKGENERAL);
 let loading = document.querySelector(".loading");
 promise.then(renderQuizzes);
+
 function renderQuizzes(quizz) {
     data = quizz.data;
     title = data.title;
@@ -13,7 +16,36 @@ function renderQuizzes(quizz) {
     telaPrincipal.classList.remove("hide");
     onQuizz.classList.add("hide");
 
-    const quizzListHTML = document.querySelector("section");
+    
+    if (localStorage.getItem("arrayIDs") !== null) {
+        listaQuizzProprio.classList.remove("no-quiz-created-yet")
+        // listaQuizzProprio.outerHTML = `<section>${listaQuizzProprio.innerHTML}</section>`
+        listaQuizzProprio.innerHTML = `
+        <div class="lista-de-quizzes-top">
+            <h2>Seus quizzes</h2>
+            <ion-icon name="add-circle" onclick="createQuiz()"></ion-icon>
+        </div>
+        <section class="lista-propria">
+
+        </section>
+        `;
+        let listaQuizzProprioConteudo = document.querySelector(".lista-propria")
+        let arrayIDsStringMode = localStorage.getItem("arrayIDs");
+        let arrayIDs = JSON.parse(arrayIDsStringMode);
+        for (i = 0; i < arrayIDs.length; i++) {
+            dadosDeserializadosQuizzCriado = localStorage.getItem(`${arrayIDs[i]}`);
+            quizzCriado = JSON.parse(dadosDeserializadosQuizzCriado);
+
+            listaQuizzProprioConteudo.innerHTML += `
+            <article onclick = "intoQuizz(${quizzCriado.id})" class="quizz-on-screen">
+            <img class="fundo" src="${quizzCriado.image}" alt="">
+            <h3>${quizzCriado.title}</h3>
+            </article>
+            `;
+        }
+    } 
+
+    const quizzListHTML = document.querySelector(".lista-server");
     quizzListHTML.innerHTML = ``;
     for (i = 0; i < data.length; i++) {
         quizzListHTML.innerHTML += `
@@ -54,7 +86,7 @@ let conteudoQuizzCriado = {
 }
 let dadosSerializadosQuizzCriado = JSON.stringify(conteudoQuizzCriado);
 
-let listaSerializada = undefined;
+// let listaSerializada = undefined;
 let quizzCriado = undefined;
 let idQuizzAtual = undefined;
 
@@ -461,26 +493,29 @@ function finalizarQuizz() {
     tela10.classList.add("hide")
     tela11.classList.remove("hide")
 
-    // tela11.innerHTML = `
-    // <h1>Seu quizz está pronto!</h1>
-    // <div class="image-container">
-    //     <img src="${urlImagemQuizz}">
-    // </div
-    // <h3>${tituloQuizz}</h3>
-    // <button onclick="intoQuizz(${idQuizzAtual})">Acessar Quizz</button>
-    // <button class="semBorda" onclick="returnHome()">Voltar pra home</button>`
     console.log(conteudoQuizzCriado)
 }
 function sendQuizz(objeto) {
     let data = objeto.data
+    
+    idQuizzAtual = data.id;
+    IDQUIZZ = idQuizzAtual;
+
+    if (localStorage.getItem("arrayIDs") === null) {
+        localStorage.setItem("arrayIDs", "[]");
+    }
+
+    let arrayIDsStringMode = localStorage.getItem("arrayIDs");
+    let arrayIDs = JSON.parse(arrayIDsStringMode);
+    arrayIDs.push(IDQUIZZ);
+    arrayIDsStringMode = JSON.stringify(arrayIDs);
+    localStorage.setItem("arrayIDs", arrayIDsStringMode);
+
     dadosSerializadosQuizzCriado = JSON.stringify(data);
     localStorage.setItem(`${data.id}`, dadosSerializadosQuizzCriado);
 
-    dadosDeserializadosQuizzCriado = localStorage.getItem(`${data.id}`);
-    quizzCriado = JSON.parse(dadosDeserializadosQuizzCriado);
-
-    idQuizzAtual = data.id;
-    IDQUIZZ = idQuizzAtual
+    // dadosDeserializadosQuizzCriado = localStorage.getItem(`${data.id}`);
+    // quizzCriado = JSON.parse(dadosDeserializadosQuizzCriado);
 
     console.log(data)
 
@@ -564,7 +599,7 @@ let finalScore = 0;
 function chooseAnswer(answer, answerBoxID) {
     let answerBox = document.querySelector(`.answers-container-${answerBoxID}`)
     let totalPoints = document.querySelectorAll(".question-container").length;
-    // answerBox.style.backgroundColor = ("#333333");
+
     answerBox.classList.add("choosen-answer");
     for (i = 0; i < answerBox.childElementCount; i++) {
         if (answerBox.children[i].classList.value === 'answer answer-true') {

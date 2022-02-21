@@ -404,3 +404,17 @@ button {
     /* right: 0; */
     /* position: relative; */
 }
+
+.tela-principal .container .lista-de-quizzes-top {
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.tela-principal .container .lista-de-quizzes-top ion-icon {
+    width: 30px;
+    height: 30px;
+    color: #EC362D;
+}
