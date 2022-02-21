@@ -47,6 +47,13 @@ h2 {
     align-self: baseline;
     /* border: 1px solid black; */
 }
+section {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-all;
+    justify-content: center;
+    gap: 0 16px;
+}
 .quizz-on-screen {
     width: 340px;
     height: 181px;
@@ -154,6 +161,14 @@ h2 {
     gap: 9px;
     padding: 27px 0;
     margin-top: 27px;
+    padding-left: 3%;
+    position: relative;
+}
+ion-icon {
+    font-size: 30px;
+    position: absolute;
+    top: 25px;
+    right: 22px;
 }
 .create-quiz .container .resposta {
     display: flex;
@@ -255,6 +270,7 @@ h2 {
 .tela-11 button {
     margin-top: 316px;
 }
+
 
 /* TELA DE EXIBIÇÃO DE QUIZZ CLICADO */
 
@@ -371,13 +387,8 @@ button {
     top: 50vh;
     left: 50vw;
 }
+ 
 
-.tela-9 .container ion-icon {
-    /* font-size: 26px; */
-    /* top: 0; */
-    /* right: 0; */
-    /* position: relative; */
-}
 
 .tela-principal .container .lista-de-quizzes-top {
     width: 90vw;
@@ -419,6 +430,7 @@ button {
         width: 1100px;
         display: flex;
         flex-wrap: wrap;
+        word-break: break-all;
         /* justify-content: center; */
     }
     .lista-propria {
