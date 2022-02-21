@@ -382,10 +382,10 @@ button {
 }
 .loading {
     position: fixed;
-    width: 50vw;
+    width: 100%;
     z-index: 2;
-    top: 50vh;
-    left: 50vw;
+    /* top: 50vh;
+    left: 50vw; */
 }
  
 
@@ -440,6 +440,9 @@ button {
         margin: 7px;
     }
 
+    .create-quiz .container{
+        padding-left: 0;
+    }
     .question-container {
         margin-top: 38px;
         width: 60vw;
