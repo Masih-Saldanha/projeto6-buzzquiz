@@ -16,16 +16,15 @@ function renderQuizzes(quizz) {
     telaPrincipal.classList.remove("hide");
     onQuizz.classList.add("hide");
 
-    
     if (localStorage.getItem("arrayIDs") !== null) {
         listaQuizzProprio.classList.remove("no-quiz-created-yet")
         // listaQuizzProprio.outerHTML = `<section>${listaQuizzProprio.innerHTML}</section>`
         listaQuizzProprio.innerHTML = `
         <div class="lista-de-quizzes-top">
             <h2>Seus quizzes</h2>
-            <ion-icon name="add-circle" onclick="createQuiz()"></ion-icon>
+            <ion-icon name="add-circle" onclick="createQuiz()" data-identifier="create-quizz"></ion-icon>
         </div>
-        <section class="lista-propria">
+        <section class="lista-propria" data-identifier="user-quizzes">
 
         </section>
         `;
@@ -37,7 +36,7 @@ function renderQuizzes(quizz) {
             quizzCriado = JSON.parse(dadosDeserializadosQuizzCriado);
 
             listaQuizzProprioConteudo.innerHTML += `
-            <article onclick = "intoQuizz(${quizzCriado.id})" class="quizz-on-screen">
+            <article onclick = "intoQuizz(${quizzCriado.id})" class="quizz-on-screen" data-identifier="quizz-card">
             <img class="fundo" src="${quizzCriado.image}" alt="">
             <h3>${quizzCriado.title}</h3>
             </article>
@@ -49,7 +48,7 @@ function renderQuizzes(quizz) {
     quizzListHTML.innerHTML = ``;
     for (i = 0; i < data.length; i++) {
         quizzListHTML.innerHTML += `
-        <article onclick = "intoQuizz(${data[i].id})" class="quizz-on-screen">
+        <article onclick = "intoQuizz(${data[i].id})" class="quizz-on-screen" data-identifier="quizz-card">
             <img class="fundo" src="${data[i].image}" alt="">
             <h3>${data[i].title}</h3>
         </article>
@@ -181,7 +180,7 @@ function criarPerguntas() {
         tela9.innerHTML += `
         <div class="container">
         <h2>Pergunta ${i + 1}</h2>
-        <ion-icon name="create-outline" onclick="abirPergunta(this)"></ion-icon>
+        <ion-icon name="create-outline" onclick="abirPergunta(this)" data-identifier="expand"></ion-icon>
         </div>`
     }
     tela9.innerHTML += `<button onclick="validarPerguntas()">Prosseguir pra criar níveis</button>`
@@ -190,7 +189,7 @@ function abirPergunta(botao) {
     botao.classList.add("hide")
     let pergunta = botao.parentNode
     pergunta.innerHTML += `
-    <input type="text" placeholder="Texto da pergunta" class="textoDaPergunta">
+    <input type="text" placeholder="Texto da pergunta" class="textoDaPergunta" data-identifier="question">
     <input type="text" placeholder="Cor de fundo da pergunta" class="corDeFundo">
     <h2>Resposta correta</h2>
     <div class="respostaCorreta">
@@ -376,7 +375,7 @@ function decidirNiveisDoQuizz() {
 
     tela10.innerHTML = `
     <h1>Agora, decida os níveis</h1>
-    <div class="container">
+    <div class="container" data-identifier="level">
         <h2>Nível 1</h2>
         <input type="text" placeholder="Título do nível" class="tituloNivel">
         <input type="text" placeholder="% de acerto mínima" class="porcentagemNivel">
@@ -387,7 +386,7 @@ function decidirNiveisDoQuizz() {
         tela10.innerHTML += `
         <div class="container">
         <h2>Nível ${i + 1}</h2>
-        <ion-icon name="create-outline" onclick="abirNivel(this)"></ion-icon>
+        <ion-icon name="create-outline" onclick="abirNivel(this)" data-identifier="expand"></ion-icon>
         </div>`
     }
     tela10.innerHTML += `<button onclick= "validarNiveis()">Finalizar Quizz</button>`
@@ -558,7 +557,7 @@ function renderChoosenQuiz(quizz) {
 
     for (i = 0; i < data.questions.length; i++) {
         onQuizz.innerHTML += `
-        <div class="question-container question-container-${i}">
+        <div class="question-container question-container-${i}" data-identifier="question">
         </div>
         `;
     }
@@ -583,7 +582,7 @@ function renderChoosenQuiz(quizz) {
         for (j = 0; j < data.questions[i].answers.length; j++) {
             let answersContainer = document.querySelector(`.answers-container-${i}`);
             answersContainer.innerHTML += `
-            <div class="answer answer-${shuffledAnswers[j].isCorrectAnswer}" onclick="chooseAnswer(${shuffledAnswers[j].isCorrectAnswer}, ${i})">
+            <div class="answer answer-${shuffledAnswers[j].isCorrectAnswer}" onclick="chooseAnswer(${shuffledAnswers[j].isCorrectAnswer}, ${i})" data-identifier="answer">
                 <img class="choosen-quizz-answer-image" src="${shuffledAnswers[j].image}" alt="">
                 <h4>${shuffledAnswers[j].text}</h4>
             </div>`;
@@ -629,24 +628,30 @@ function chooseAnswer(answer, answerBoxID) {
         for (i = 1; i < data.levels.length; i++) {
             if (finalScore >= data.levels[i - 1].minValue && finalScore <= data.levels[i].minValue) {
                 onQuizz.innerHTML += `
+                    <div data-identifier="quizz-result">
                     <div class="quizz-end">
-                    <h4>${finalScore}% de acerto: ${data.levels[i].title}</h4>
+                    <h4>${finalScore}% de acerto: ${data.levels[i-1].title}</h4>
                     </div>
-                    <img class="end-img" src="${data.levels[i].image}" alt="">
-                    <h4 class="end-text">${data.levels[i].text}</h4>
+                    <img class="end-img" src="${data.levels[i-1].image}" alt="">
+                    <h4 class="end-text">${data.levels[i-1].text}</h4>
+                    <div class="buttons">
                     <button onclick="restartQuizz()">Reiniciar Quizz</button>
                     <button class="return-home" onclick="returnHome()">Voltar pra home</button>
-                    `;
+                    
+                    </div>`;
             } else {
                 onQuizz.innerHTML += `
+                    <div data-identifier="quizz-result">
                     <div class="quizz-end">
                     <h4>${finalScore}% de acerto: ${data.levels[i].title}</h4>
                     </div>
                     <img class="end-img" src="${data.levels[i].image}" alt="">
                     <h4 class="end-text">${data.levels[i].text}</h4>
+                    <div class="buttons">
                     <button onclick="restartQuizz()">Reiniciar Quizz</button>
                     <button class="return-home" onclick="returnHome()">Voltar pra home</button>
-                    `;
+                    </div>
+                    </div>`;
             }
             setTimeout(() => {
                 onQuizz.scrollIntoView(false);
