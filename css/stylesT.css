@@ -179,7 +179,6 @@ h2 {
     padding: 27px 0;
     margin-top: 27px;
 }
-
 .create-quiz .container .resposta {
     display: flex;
     flex-direction: column;
@@ -397,4 +396,11 @@ button {
     z-index: 2;
     top: 50vh;
     left: 50vw;
+}
+
+.tela-9 .container ion-icon {
+    /* font-size: 26px; */
+    /* top: 0; */
+    /* right: 0; */
+    /* position: relative; */
 }

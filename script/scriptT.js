@@ -30,8 +30,6 @@ function renderQuizzes(quizz) {
     console.log(data);
 }
 
-
-
 // LISTA DE TELAS //
 
 let telaPrincipal = document.querySelector(".tela-principal");
@@ -48,122 +46,17 @@ let urlImagemQuizz
 let quantidadeDePerguntas
 let quantidadeNiveis
 
-let objetoTextoDaPergunta = []
-let objetoCor = []
-let objetoRespostaVerdadeira = []
-let objetoUrlCorreta = []
-let objetoRespostaIncorreta = []
-let objetoUrlImagemIncorreta = []
-let objetotituloNivel = []
-let objetoPorcentagemNivel = []
-let objetoUrlNivel = []
-let objetoDescricaoNivel = []
-
 let conteudoQuizzCriado = {
-	title: "Título do quizz",
-	image: "https://http.cat/411.jpg",
-	questions: [
-		{
-			title: "Título da pergunta 1",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-                {
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				},
-                {
-					text: "Texto da resposta 3",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				},
-				{
-					text: "Texto da resposta 4",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 2",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-                {
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				},
-                {
-					text: "Texto da resposta 3",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				},
-				{
-					text: "Texto da resposta 4",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 3",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-                {
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				},
-                {
-					text: "Texto da resposta 3",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				},
-				{
-					text: "Texto da resposta 4",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		}
-	],
-	levels: [
-		{
-			title: "Título do nível 1",
-			image: "https://http.cat/411.jpg",
-			text: "Descrição do nível 1",
-			minValue: 0
-		},
-		{
-			title: "Título do nível 2",
-			image: "https://http.cat/412.jpg",
-			text: "Descrição do nível 2",
-			minValue: 50
-		}
-	]
+    title: "",
+    image: "",
+    questions: [],
+    levels: []
 }
+let dadosSerializadosQuizzCriado = JSON.stringify(conteudoQuizzCriado);
 
-// let conteudoQuizzCriado = {
-// 	title: tituloQuizz,
-// 	image: urlImagemQuizz,
-// 	questions: [{answers: [{text: ""}]}],
-// 	levels: []
-// }
+let listaSerializada = undefined;
+let quizzCriado = undefined;
+let idQuizzAtual = undefined;
 
 // FUNÇÕES //
 function createQuiz() {
@@ -178,7 +71,7 @@ function validarInformacoes() {
 
     let requisitosAtendidos = 0;
     let linkSeguro = "";
-    
+
     if (tituloQuizz.length >= 20 && tituloQuizz.length < 65) {
         requisitosAtendidos += 1;
         conteudoQuizzCriado.title = tituloQuizz
@@ -187,7 +80,7 @@ function validarInformacoes() {
         conteudoQuizzCriado.questions.length = quantidadeDePerguntas
 
         for (i = 0; i < quantidadeDePerguntas; i++) {
-            conteudoQuizzCriado.questions[i] = {title: "", color: "", answers: []}
+            conteudoQuizzCriado.questions[i] = { title: "", color: "", answers: [] }
         }
 
     } if (quantidadeNiveis >= 2) {
@@ -195,7 +88,7 @@ function validarInformacoes() {
         conteudoQuizzCriado.levels.length = quantidadeNiveis
 
         for (i = 0; i < quantidadeNiveis; i++) {
-            conteudoQuizzCriado.levels[i] = {title: "", image: "", text: "", minValue: 0}
+            conteudoQuizzCriado.levels[i] = { title: "", image: "", text: "", minValue: 0 }
             // quando eu to validando o title do elemento 0 do array levels >
             // conteudoQuizzCriado.levels[0]. = ""
         }
@@ -209,11 +102,11 @@ function validarInformacoes() {
             }
         }
     }
-    
+
     if (requisitosAtendidos == 4) {
         criarPerguntas()
     } else {
-       requisitosNaoAtendidos()
+        requisitosNaoAtendidos()
     }
 }
 function requisitosNaoAtendidos() {
@@ -298,9 +191,9 @@ function validarPerguntas() {
     let respostaIncorreta = document.querySelectorAll(".tela-9 .container .respostaIncorreta")
     let urlImagemIncorreta = document.querySelectorAll(".tela-9 .container .urlImagemIncorreta")
 
-    let caracteresValidos = ["a","b","c","d","e","f","A","B","C","D","E","F",0,1,2,3,4,5,6,7,8,9]    
+    let caracteresValidos = ["a", "b", "c", "d", "e", "f", "A", "B", "C", "D", "E", "F", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     let requisitosAtendidos = 0;
-    
+
     let somaTexto = 0
     let somaCor = 0
     let somaCorreta = 0
@@ -308,61 +201,66 @@ function validarPerguntas() {
     let somaUrlCorreta = 0
     let somarUrlncorreta = 0
 
-    // for (i = 0; i < conteudoQuizzCriado.questions.length; i++) {
-    //     for (j = 0; j < corDeFundo.length; j++) {
-    //         conteudoQuizzCriado.questions[i].answers[j].text = corDeFundo[j].value;
-    //     }
-    // }
-
-    // {
-    //     text: "Texto da resposta 1",
-    //     image: "https://http.cat/411.jpg",
-    //     isCorrectAnswer: true
-    // },
-
-    // conteudoQuizzCriado.questions[i] = {title: "", color: "", answers: []}
-
     for (let i = 0; i < textoDaPergunta.length; i++) {
         let valor = textoDaPergunta[i].value
         if (valor.length >= 20) {
             somaTexto += 1
-            objetoTextoDaPergunta.push(valor)
-        } if (somaTexto/textoDaPergunta.length == 1) {
+        } if (somaTexto / textoDaPergunta.length == 1) {
             requisitosAtendidos += 1
-            for (i = 0; i < textoDaPergunta.length; i++) {
+            console.log("titulo da pergunta atingida")
+            console.log(requisitosAtendidos)
+
+            for (i = 0; i < quantidadeDePerguntas; i++) {
                 conteudoQuizzCriado.questions[i].title = textoDaPergunta[i].value;
             }
         }
     }
 
     for (let i = 0; i < corDeFundo.length; i++) {
+        // console.log("entrei")
         let valor = corDeFundo[i].value
-        if (valor.length === 7 && valor[0] == "#") {
+        if (valor.length === 7 && valor[0] === "#") {
+            // console.log("entrei2")
             for (let j = 0; j < valor.length; j++) {
                 for (let k = 0; k < caracteresValidos.length; k++) {
-                    if (valor[j] === caracteresValidos[k]) {
+                    // console.log(`somaCor = ${somaCor}`)
+
+                    if (valor[j] == caracteresValidos[k]) {
                         somaCor += 1
+
                         if (somaCor % 6 === 0) {
-                            objetoCor.push(valor)
                         }
                     }
+
                 }
             }
-        } if (somaCor/(corDeFundo.length*6) == 1) {
+
+        } if (somaCor / (corDeFundo.length * 6) == 1) {
             requisitosAtendidos += 1
-            for (i = 0; i < corDeFundo.length; i++) {
-                conteudoQuizzCriado.questions[i].title = corDeFundo[i].value;
+            console.log("cor da pergunta atingida")
+            console.log(requisitosAtendidos)
+
+            for (i = 0; i < quantidadeDePerguntas; i++) {
+                conteudoQuizzCriado.questions[i].color = corDeFundo[i].value;
             }
-            // console.log(objetoCor)
         }
     }
+
+    for (i = 0; i < quantidadeDePerguntas; i++) {
+        for (j = 0; j < 4; j++) {
+            conteudoQuizzCriado.questions[i].answers[j] = { text: "", image: "", isCorrectAnswer: undefined }
+        }
+    }
+
+
     for (let i = 0; i < respostaVerdadeira.length; i++) {
         let valor = respostaVerdadeira[i].value
         if (valor !== "") {
             somaCorreta += 1
-            objetoRespostaVerdadeira.push(valor)
-        } if (somaCorreta/(respostaVerdadeira.length) == 1) {
+        } if (somaCorreta / (respostaVerdadeira.length) == 1) {
             requisitosAtendidos += 1
+            console.log("booleano e text das resposta certas atingida")
+            console.log(requisitosAtendidos)
 
             for (i = 0; i < respostaVerdadeira.length; i++) {
                 conteudoQuizzCriado.questions[i].answers[0].text = respostaVerdadeira[i].value;
@@ -375,13 +273,14 @@ function validarPerguntas() {
         let valor = respostaIncorreta[i].value
         if (valor !== "") {
             somaIncorreta += 1
-            objetoRespostaIncorreta.push(valor)
-        } if (somaIncorreta/respostaIncorreta.length == 1) {
+        } if (somaIncorreta / respostaIncorreta.length == 1) {
             requisitosAtendidos += 1
+            console.log("booleano e text das resposta erradas atingida")
+            console.log(requisitosAtendidos)
 
-            for (i = 0; i < respostaIncorreta.length; i++) {
-                for (j = 1; j < corDeFundo.length; j++) {
-                    conteudoQuizzCriado.questions[i].answers[j].text = respostaIncorreta[i].value;
+            for (i = 0; i < quantidadeDePerguntas; i++) {
+                for (j = 1; j < 4; j++) {
+                    conteudoQuizzCriado.questions[i].answers[j].text = respostaIncorreta[(j - 1) + (i * 3)].value;
                     conteudoQuizzCriado.questions[i].answers[j].isCorrectAnswer = false;
                 }
             }
@@ -396,13 +295,14 @@ function validarPerguntas() {
                 linkSeguro += valor[j]
             } if (linkSeguro == "https") {
                 somaUrlCorreta += 1
-                objetoUrlCorreta.push(valor)
             }
-        } if (somaUrlCorreta/urlImagemCorreta.length == 1) {
+        } if (somaUrlCorreta / urlImagemCorreta.length == 1) {
             requisitosAtendidos += 1
+            console.log("image das resposta certas atingida")
+            console.log(requisitosAtendidos)
 
             for (i = 0; i < urlImagemCorreta.length; i++) {
-                conteudoQuizzCriado.questions[i].answers[0].text = urlImagemCorreta[i].value;
+                conteudoQuizzCriado.questions[i].answers[0].image = urlImagemCorreta[i].value;
             }
 
         }
@@ -415,14 +315,15 @@ function validarPerguntas() {
                 linkSeguro += valor[j]
             } if (linkSeguro == "https") {
                 somarUrlncorreta += 1
-                objetoUrlImagemIncorreta.push(valor)
             }
-        } if (somarUrlncorreta/urlImagemIncorreta.length == 1) {
+        } if (somarUrlncorreta / urlImagemIncorreta.length == 1) {
             requisitosAtendidos += 1
+            console.log("image das resposta erradas atingida")
+            console.log(requisitosAtendidos)
 
-            for (i = 0; i < urlImagemIncorreta.length; i++) {
-                for (j = 1; j < corDeFundo.length; j++) {
-                    conteudoQuizzCriado.questions[i].answers[j].text = urlImagemIncorreta[i].value;
+            for (i = 0; i < quantidadeDePerguntas; i++) {
+                for (j = 1; j < 4; j++) {
+                    conteudoQuizzCriado.questions[i].answers[j].image = urlImagemIncorreta[(j - 1) + (i * 3)].value;
                 }
             }
 
@@ -432,10 +333,12 @@ function validarPerguntas() {
     if (requisitosAtendidos == 6) {
         decidirNiveisDoQuizz()
     } else {
-        requisitosAtendidos()
+        // console.log(requisitosAtendidos)
+        requisitosNaoAtendidos()
     }
 }
-function decidirNiveisDoQuizz (){
+
+function decidirNiveisDoQuizz() {
     tela9.classList.add("hide")
     tela10.classList.remove("hide")
 
@@ -455,7 +358,7 @@ function decidirNiveisDoQuizz (){
         <ion-icon name="create-outline" onclick="abirNivel(this)"></ion-icon>
         </div>`
     }
-    tela10.innerHTML += `<button onclick= "validarNiveis()">Finalizar Quizz</button>`    
+    tela10.innerHTML += `<button onclick= "validarNiveis()">Finalizar Quizz</button>`
 }
 function abirNivel(botao) {
     botao.classList.add("hide")
@@ -473,13 +376,13 @@ function validarNiveis() {
     let urlImagem = document.querySelectorAll(".tela-10 .container .urlImagem")
     let descricao = document.querySelectorAll(".tela-10 .container .descricaoNivel")
 
-    // conteudoQuizzCriado.levels[i] = {title: "", image: "", text: "", minValue: 0}
-
     let requisitosAtendidos = 0;
     let somaDescricao = 0
     let somaTitulo = 0
     let linkSeguro = "";
     let https = ""
+    let soma1 = 0
+    let soma2 = 0
     for (let i = 0; i < quantidadeNiveis; i++) {
         https += "https"
     }
@@ -487,28 +390,28 @@ function validarNiveis() {
         let valor = titulo[i].value
         if (valor.length >= 10) {
             somaTitulo += 1
-            objetotituloNivel.push(valor)
-        } if (somaTitulo/titulo.length == 1) {
+        } if (somaTitulo / titulo.length == 1) {
             requisitosAtendidos += 1
+            console.log("titulo atingida")
+            console.log(requisitosAtendidos)
+
             for (i = 0; i < titulo.length; i++) {
                 conteudoQuizzCriado.levels[i].title = titulo[i].value;
             }
         }
     }
     for (let i = 0; i < porcentagens.length; i++) {
-        let soma1 = 0
-        let soma2 = 0
         let valor = porcentagens[i].value
         if (valor >= 0 && valor <= 100 && valor !== "") {
             soma1 += 1
-            objetoPorcentagemNivel.push(valor)
         } if (valor == 0) {
             soma2 += 1
-            objetoPorcentagemNivel.push(valor)
-        } if (soma1/porcentagens.length == 1 && soma2 >= 1) {
+        } if (soma1 / porcentagens.length == 1 && soma2 >= 1) {
             requisitosAtendidos += 1
+            console.log("porcentagem minima atingida")
+            console.log(requisitosAtendidos)
             for (i = 0; i < porcentagens.length; i++) {
-                conteudoQuizzCriado.levels[i].minValue = porcentagens[i].value;
+                conteudoQuizzCriado.levels[i].minValue = parseInt(porcentagens[i].value);
             }
         }
     }
@@ -518,41 +421,68 @@ function validarNiveis() {
         if (valor.length >= 5) {
             for (let j = 0; j < 5; j++) {
                 linkSeguro += valor[j]
-                if(linkSeguro == https) {
+                if (linkSeguro == https) {
                     soma += 1
-                    objetoUrlNivel.push(valor)
                 }
             }
         } if (soma == 1) {
             requisitosAtendidos += 1
+            console.log("image atingida")
+            console.log(requisitosAtendidos)
             for (i = 0; i < urlImagem.length; i++) {
                 conteudoQuizzCriado.levels[i].image = urlImagem[i].value;
             }
-        } 
+        }
     }
     for (let i = 0; i < descricao.length; i++) {
         let valor = descricao[i].value
         if (valor.length >= 30) {
             somaDescricao += 1
-            objetoDescricaoNivel.push(valor)
-        } if (somaDescricao/descricao.length == 1) {
+        } if (somaDescricao / descricao.length == 1) {
             requisitosAtendidos += 1
+            console.log("text atingida")
+            console.log(requisitosAtendidos)
             for (i = 0; i < descricao.length; i++) {
                 conteudoQuizzCriado.levels[i].text = descricao[i].value;
             }
-        } 
-    }  
+        }
+    }
 
     if (requisitosAtendidos == 4) {
+        let sendQuizzToAPI = axios.post(`${LINKGENERAL}`, conteudoQuizzCriado);
+        sendQuizzToAPI.then(sendQuizz);
         finalizarQuizz()
-    } else (
+    } else {
+        console.log(`requisitos atendidos: ${requisitosAtendidos}`)
         requisitosNaoAtendidos()
-    )
+    }
 }
 function finalizarQuizz() {
     tela10.classList.add("hide")
     tela11.classList.remove("hide")
-    criarObjetoPost()
+
+    // tela11.innerHTML = `
+    // <h1>Seu quizz está pronto!</h1>
+    // <div class="image-container">
+    //     <img src="${urlImagemQuizz}">
+    // </div
+    // <h3>${tituloQuizz}</h3>
+    // <button onclick="intoQuizz(${idQuizzAtual})">Acessar Quizz</button>
+    // <button class="semBorda" onclick="returnHome()">Voltar pra home</button>`
+    console.log(conteudoQuizzCriado)
+}
+function sendQuizz(objeto) {
+    let data = objeto.data
+    dadosSerializadosQuizzCriado = JSON.stringify(data);
+    localStorage.setItem(`${data.id}`, dadosSerializadosQuizzCriado);
+
+    dadosDeserializadosQuizzCriado = localStorage.getItem(`${data.id}`);
+    quizzCriado = JSON.parse(dadosDeserializadosQuizzCriado);
+
+    idQuizzAtual = data.id;
+    IDQUIZZ = idQuizzAtual
+
+    console.log(data)
 
     tela11.innerHTML = `
     <h1>Seu quizz está pronto!</h1>
@@ -560,30 +490,14 @@ function finalizarQuizz() {
         <img src="${urlImagemQuizz}">
     </div
     <h3>${tituloQuizz}</h3>
-    <button>Acessar Quizz</button>
+    <button onclick="intoQuizz(${idQuizzAtual})">Acessar Quizz</button>
     <button class="semBorda" onclick="returnHome()">Voltar pra home</button>`
-    console.log(conteudoQuizzCriado)
 }
-
-function criarObjetoPost() {
-    console.log(objetoTextoDaPergunta)
-    console.log(objetoCor)
-    console.log(objetoRespostaVerdadeira)
-    console.log(objetoUrlCorreta)
-    console.log(objetoRespostaIncorreta)
-    console.log(objetoUrlImagemIncorreta)
-    console.log(objetotituloNivel)
-    console.log(objetoPorcentagemNivel)
-    console.log(objetoUrlNivel)
-    console.log(objetoDescricaoNivel)
-}
-
-
-
 
 // FUNÇÃO PARA RENDERIZAR QUIZZ CLICADO NA TELA
 function intoQuizz(id) {
     loading.classList.remove("hide");
+    tela11.classList.add("hide");
     telaPrincipal.classList.add("hide");
     onQuizz.classList.remove("hide");
     IDQUIZZ = id;
@@ -664,14 +578,8 @@ function chooseAnswer(answer, answerBoxID) {
     if (answer === true) {
         score += 1;
         answeredQuestions += 1;
-        // console.log("certo");
-        // console.log(score);
-        // console.log(answeredQuestions);
     } else {
         answeredQuestions += 1;
-        // console.log("errado");
-        // console.log(score);
-        // console.log(answeredQuestions);
     }
     if (answerBoxID < (totalPoints - 1)) {
         let nextQuestion = document.querySelector(`.question-container-${answerBoxID + 1}`);
@@ -717,6 +625,7 @@ function chooseAnswer(answer, answerBoxID) {
 
 // FUNÇÃO PARA VOLTAR PARA HOME
 function returnHome() {
+    tela11.classList.add("hide");
     telaPrincipal.scrollIntoView(true);
     promise = axios.get(LINKGENERAL);
     promise.then(renderQuizzes);
